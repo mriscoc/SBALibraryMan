@@ -17,6 +17,7 @@ uses
 function DownloadFile(UrlSource,FileDestiny:string):boolean;
 function CheckNetworkConnection:boolean;
 procedure CheckNetworkThread;
+function IsNetworkEnabled:boolean;
 function UrlSolveRedir(var UrlValue:string):boolean;
 
 Type
@@ -58,17 +59,17 @@ Type
    Constructor Create;
  end;
 
-var
-  isNetworkEnabled:boolean=false;
-
 implementation
 
 uses DebugU;
 
+var
+  NetworkEnabled:boolean=false;
+
 function DownloadFile(UrlSource,FileDestiny:string):boolean;
 begin
   result:=false;
-  if isNetworkEnabled then try
+  if NetworkEnabled then try
     strSaveToFileUTF8(FileDestiny, retrieve(UrlSource));
   finally
     freeThreadVars;
@@ -86,13 +87,18 @@ begin
   except
     On E :Exception do Info('CheckNetworkConnection error',E.Message);
   end;
-  isNetworkEnabled:=Ip<>'';
-  exit(isNetworkEnabled);
+  NetworkEnabled:=Ip<>'';
+  exit(NetworkEnabled);
 end;
 
 procedure CheckNetworkThread;
 begin
   TCheckNetworkConnectionThread.Create;
+end;
+
+function IsNetworkEnabled: boolean;
+begin
+  exit(NetworkEnabled);
 end;
 
 function UrlSolveRedir(var UrlValue: string): boolean;
@@ -127,7 +133,7 @@ begin
     On E :Exception do Info('CheckNetworkConnection error',E.Message);
   end;
   freeThreadVars;
-  isNetworkEnabled:=s<>'';
+  NetworkEnabled:=s<>'';
 end;
 
 { TDownloadThread }
@@ -147,7 +153,7 @@ end;
 procedure TDownloadThread.ShowStatus;
 // this method is executed by the mainthread and can therefore access all GUI elements.
 begin
-  if not isNetworkEnabled then Info('TDownloadThread','Warning, Network is disabled');
+  if not NetworkEnabled then Info('TDownloadThread','Warning, Network is disabled');
   case FStatus of
     dwStart: fStatusText := 'Url:'+FUrlSource+' Starting...';
     dwDownloading  :fStatusText := 'Downloading '+FFileDestiny+'...';
@@ -183,7 +189,7 @@ procedure TDownloadThread.Execute;
 begin
   FStatus:=dwDownloading;
   Synchronize(@Showstatus);
-  if (not Terminated) and isNetworkEnabled then
+  if (not Terminated) and NetworkEnabled then
   try
     try
       info('TDownloadThread.Execute',FUrlSource);

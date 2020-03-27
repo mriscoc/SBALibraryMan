@@ -5,7 +5,7 @@ unit SBAProgContrlrU;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, Math;
+  Classes, SysUtils, ComCtrls, Math, ConfigU;
 
 const
   cSBACtrlrSignatr='-- /SBA: Controller';
@@ -54,7 +54,7 @@ type
 
 implementation
 
-uses SBAProgramU, ConfigFormU, UtilsU, DebugU;
+uses SBAProgramU, UtilsU, DebugU;
 
 { TSBAContrlrProg }
 
