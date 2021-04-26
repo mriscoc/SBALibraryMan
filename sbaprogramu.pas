@@ -6,7 +6,7 @@ interface
 
 uses
   LCLVersion, Dialogs, Classes, SysUtils, SBAProgContrlrU, ListViewFilterEdit, FileUtil,
-  LazFileUtils;
+  LazFileUtils, ConfigU;
 
 const
   cSBADefaultPrgName='NewProgram.prg';
@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses ConfigFormU,UtilsU;
+uses UtilsU;
 
 { TSBAProgram }
 

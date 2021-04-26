@@ -13,8 +13,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="1"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="3"/>
+      <RevisionNr Value="3"/>
+      <BuildNr Value="13"/>
     </VersionInfo>
     <BuildModes Count="7">
       <Item1 Name="default" Default="True"/>
@@ -251,30 +251,36 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="9">
       <Item1>
-        <PackageName Value="internettools"/>
+        <PackageName Value="ExtraHighlighters_Dsgn"/>
       </Item1>
       <Item2>
-        <PackageName Value="fpc_markdown"/>
+        <PackageName Value="ExtraHighlighters"/>
       </Item2>
       <Item3>
-        <PackageName Value="bgracontrols"/>
+        <PackageName Value="internettools"/>
       </Item3>
       <Item4>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="fpc_markdown"/>
       </Item4>
       <Item5>
-        <PackageName Value="uEControls"/>
+        <PackageName Value="bgracontrols"/>
       </Item5>
       <Item6>
-        <PackageName Value="LazControls"/>
+        <PackageName Value="SynEdit"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="uEControls"/>
       </Item7>
+      <Item8>
+        <PackageName Value="LazControls"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="LCL"/>
+      </Item9>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="8">
       <Unit0>
         <Filename Value="SBAlibrary.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -288,42 +294,38 @@
         <UnitName Value="LibraryFormU"/>
       </Unit1>
       <Unit2>
-        <Filename Value="sbasnippetu.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="SBASnippetU"/>
-      </Unit2>
-      <Unit3>
         <Filename Value="sbaprogcontrlru.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SBAProgContrlrU"/>
-      </Unit3>
-      <Unit4>
+      </Unit2>
+      <Unit3>
         <Filename Value="sbaprogramu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SBAProgramU"/>
-      </Unit4>
-      <Unit5>
+      </Unit3>
+      <Unit4>
         <Filename Value="utilsu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UtilsU"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="configformu.pas"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="configu.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ConfigForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfigFormU"/>
-      </Unit6>
-      <Unit7>
+        <UnitName Value="ConfigU"/>
+      </Unit5>
+      <Unit6>
         <Filename Value="debugu.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit7>
-      <Unit8>
+        <UnitName Value="DebugU"/>
+      </Unit6>
+      <Unit7>
         <Filename Value="dwfileu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DwFileU"/>
-      </Unit8>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

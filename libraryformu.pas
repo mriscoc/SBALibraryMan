@@ -8,9 +8,9 @@ uses
   Classes, SysUtils, ListViewFilterEdit, Forms, Controls, Graphics, Dialogs,
   ComCtrls, Buttons, ExtCtrls, FileUtil, LazFileUtils, SynExportHTML, StrUtils,
   SynHighlighterPas, SynHighlighterHTML, SynHighlighterCpp, SynHighlighterIni,
-  lclintf, StdCtrls, EditBtn, Menus, IniPropStorage, SBASnippetU, SBAProgramU,
-  IniFiles, SynHighlighterPython, SynEdit, SynHighlighterSBA, MarkdownProcessor,
-  MarkdownUtils, uEImage, BGRABitmap, Math;
+  lclintf, StdCtrls, EditBtn, Menus, IniPropStorage,
+  IniFiles, SynHighlighterPython, SynEdit, SynHighlighterVHDL, MarkdownProcessor,
+  MarkdownUtils, uEImage, BGRABitmap, Math, ConfigU;
 
 type
   tLibDwStatus=(Idle,GetBase, GetLibrary, GetPrograms, GetSnippets);
@@ -57,10 +57,7 @@ type
     Panel7: TPanel;
     ItemsMenu: TPopupMenu;
     Panel8: TPanel;
-    ProgramDescription: TMemo;
     Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
     LibraryPages: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -73,7 +70,7 @@ type
     PB_SBAprograms: TProgressBar;
     PB_SBAsnippets: TProgressBar;
     IpCoreDescription: TMemo;
-    SnippetDescription: TMemo;
+    SnpDescription: TSynEdit;
     SnippetsFilter: TListViewFilterEdit;
     IPCoresFilter: TListViewFilterEdit;
     ProgramsFilter: TListViewFilterEdit;
@@ -84,7 +81,9 @@ type
     LV_IPCores: TListView;
     LV_Programs: TListView;
     SB: TStatusBar;
+    PrgDescription: TSynEdit;
     SynExporterHTML: TSynExporterHTML;
+    SynVHDLSyn1: TSynVHDLSyn;
     UpdateRep: TTabSheet;
     procedure B_OpenDSClick(Sender: TObject);
     procedure B_AddtoSnippetsClick(Sender: TObject);
@@ -137,8 +136,6 @@ type
     { private declarations }
   public
     { public declarations }
-    SBASnippet:TSBASnippet;
-    SBAProgram:TSBAProgram;
     procedure UpdateLocalLists;
     procedure OpenDataSheet(f: string);
     function Md2Html(fi: string): string;
@@ -161,7 +158,7 @@ implementation
 
 {$R *.lfm}
 
-uses ConfigFormU, UtilsU, DWFileU, DebugU;
+uses UtilsU, DWFileU, DebugU;
 
 var
   LibDwStatus:TLibDwStatus=Idle;
@@ -241,7 +238,7 @@ begin
   with LibraryForm do case meta of
     'vhdl':
       begin
-        SynExporterHTML.Highlighter:=TSynSBASyn.Create(LibraryForm);
+        SynExporterHTML.Highlighter:=TSynVHDLSyn.Create(LibraryForm);
         exportlines;
       end;
     'html':
@@ -299,16 +296,11 @@ var
   f:string;
   l:TListItem;
 begin
-  SnippetDescription.Clear;
   L:=LV_Snippets.Selected;
   if (L=nil) or (LV_Snippets.Items.Count=0) then exit;
   B_AddtoSnippets.Enabled:=SnippetsList.IndexOf(L.Caption)=-1;
   f:=L.SubItems[0];
-  if FileExists(f) then
-  begin
-    SBASnippet.filename:=f;
-    if SBASnippet.description.count>0 then SnippetDescription.Lines.Assign(SBASnippet.description);
-  end;
+  if FileExists(f) then SnpDescription.Lines.LoadFromFile(f);
 end;
 
 procedure TLibraryForm.MenuItem1Click(Sender: TObject);
@@ -412,13 +404,12 @@ end;
 
 procedure TLibraryForm.FormCreate(Sender: TObject);
 begin
+  if not CheckNetworkConnection then ShowMessage('Network connection not available.');
+//  isNetworkEnabled:=true;
   if not GetConfigValues then exit;
   SB.SimpleText:='Config file: '+ConfigFile;
   IniStor.IniFileName:=ConfigFile;
   IniStor.IniSection:='LibraryMan';
-  isNetworkEnabled:=true;
-  SBASnippet:=TSBASnippet.Create;
-  SBAProgram:=TSBAProgram.Create;
   IpCoreList:=TStringList.Create;
   SnippetsList:=TStringList.Create;
   ProgramsList:=TStringList.Create;
@@ -429,14 +420,16 @@ begin
   //BUG:Workaround to correct an exception when the focus return to "update repositories" page-
   Ed_SBAbase.Enabled:=false;
   {$ENDIF}
+  PrgDescription.Font.Size:=7;
+  PrgDescription.Font.Quality:=fqCleartype;
+  SnpDescription.Font.Size:=7;
+  SnpDescription.Font.Quality:=fqCleartype;
   IniStor.WriteString('OpenAt',DateTimeToStr(Now));
 end;
 
 procedure TLibraryForm.FormDestroy(Sender: TObject);
 begin
   Info('TLibraryForm','FormDestroy');
-  if assigned(SBASnippet) then FreeAndNil(SBASnippet);
-  if assigned(SBAProgram) then FreeAndNil(SBAProgram);
   if assigned(IpCoreList) then FreeAndNil(IpCoreList);
   if assigned(SnippetsList) then FreeAndNil(SnippetsList);
   if assigned(ProgramsList) then FreeAndNil(ProgramsList);
@@ -513,16 +506,11 @@ var
   f:string;
   l:TListItem;
 begin
-  ProgramDescription.Clear;
   L:=LV_Programs.Selected;
   if (L=nil) or (LV_Programs.Items.Count=0) then exit;
   B_AddtoPrograms.Enabled:=ProgramsList.IndexOf(L.Caption)=-1;
   f:=L.SubItems[0];
-  if f<>'' then
-  begin
-    SBAProgram.filename:=f;
-    if SBAProgram.description.count>0 then ProgramDescription.Lines.Assign(SBAProgram.description);
-  end;
+  if f<>'' then PrgDescription.Lines.LoadFromFile(f);
 end;
 
 procedure TLibraryForm.B_AddtoLibraryClick(Sender: TObject);
