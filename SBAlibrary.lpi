@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
-      <Title Value="SBAlibrary"/>
+      <Title Value="SBAlibraryManager"/>
       <Scaled Value="True"/>
+      <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True/PM_V2"/>
+        <LongPathAware Value="True"/>
+        <AnsiUTF8 Value="True"/>
+        <TextName Value="mriscoc.SBA.SBAlibraryManager"/>
+        <TextDesc Value="SBA library manager"/>
+      </XPManifest>
       <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="1"/>
-      <RevisionNr Value="3"/>
-      <BuildNr Value="13"/>
+      <RevisionNr Value="4"/>
+      <BuildNr Value="1"/>
+      <StringTable CompanyName="uE Peru" FileDescription="SBA library manager" LegalCopyright="(c) Miguel Risco-Castillo"/>
     </VersionInfo>
     <BuildModes Count="7">
       <Item1 Name="default" Default="True"/>
@@ -249,7 +260,6 @@
     </PublishOptions>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0"/>
     </RunParams>
     <RequiredPackages Count="9">
       <Item1>
@@ -280,7 +290,7 @@
         <PackageName Value="LCL"/>
       </Item9>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="SBAlibrary.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -326,6 +336,10 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="DwFileU"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="versionsupportu.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -343,6 +357,10 @@
       </SyntaxOptions>
     </Parsing>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

@@ -10,7 +10,7 @@ uses
   SynHighlighterPas, SynHighlighterHTML, SynHighlighterCpp, SynHighlighterIni,
   lclintf, StdCtrls, EditBtn, Menus, IniPropStorage,
   IniFiles, SynHighlighterPython, SynEdit, SynHighlighterVHDL, MarkdownProcessor,
-  MarkdownUtils, uEImage, BGRABitmap, Math, ConfigU;
+  MarkdownUtils, uEImage, BGRABitmap, Math, ConfigU, versionsupportu;
 
 type
   tLibDwStatus=(Idle,GetBase, GetLibrary, GetPrograms, GetSnippets);
@@ -407,6 +407,12 @@ begin
   if not CheckNetworkConnection then ShowMessage('Network connection not available.');
 //  isNetworkEnabled:=true;
   if not GetConfigValues then exit;
+  {$IFDEF DEBUG}
+  caption:='SBA Library Manager v'+GetFileVersion+' DEBUG mode';
+  info('TMainForm.FormCreate',caption);
+  {$ELSE}
+  caption:='SBA Library Manager v'+GetFileVersion;
+  {$ENDIF}
   SB.SimpleText:='Config file: '+ConfigFile;
   IniStor.IniFileName:=ConfigFile;
   IniStor.IniSection:='LibraryMan';
@@ -885,9 +891,9 @@ begin
     '.mdtxt','.mdtext','.text',
     '.rmd':
       begin
-        OpenURL('file://'+Md2Html(f));
+        OpenURL(Md2Html(f));
       end;
-    '.htm','.html':OpenURL('file://'+f);
+    '.htm','.html':OpenURL(f);
   else
     OpenDocument(f);
   end;

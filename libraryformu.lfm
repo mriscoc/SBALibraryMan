@@ -1,59 +1,60 @@
 object LibraryForm: TLibraryForm
   Left = 640
-  Height = 570
+  Height = 712
   Top = 245
-  Width = 624
+  Width = 780
   Caption = 'Library Manager'
-  ClientHeight = 570
-  ClientWidth = 624
-  Constraints.MinHeight = 570
-  Constraints.MinWidth = 550
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  ClientHeight = 712
+  ClientWidth = 780
+  Constraints.MinHeight = 712
+  Constraints.MinWidth = 688
+  DesignTimePPI = 120
   Position = poMainFormCenter
   SessionProperties = 'Ed_SBAbase.Text;Ed_SBAlibrary.Text;Ed_SBAprograms.Text;Ed_SBARepoZipFile.ItemIndex;Ed_SBARepoZipFile.Items;Ed_SBARepoZipFile.Text;Ed_SBAsnippets.Text;Left;Top'
-  LCLVersion = '2.0.7.0'
+  LCLVersion = '4.3.0.0'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   object LibraryPages: TPageControl
     Left = 0
-    Height = 570
+    Height = 712
     Top = 0
-    Width = 624
+    Width = 780
     ActivePage = UpdateRep
     Align = alClient
     TabIndex = 0
     TabOrder = 0
     object UpdateRep: TTabSheet
       Caption = 'Update repositories'
-      ClientHeight = 542
-      ClientWidth = 616
+      ClientHeight = 679
+      ClientWidth = 772
       object GB_SBAbase: TGroupBox
-        Left = 5
-        Height = 105
-        Top = 69
-        Width = 606
+        Left = 6
+        Height = 131
+        Top = 86
+        Width = 760
         Align = alTop
-        BorderSpacing.Around = 5
+        BorderSpacing.Around = 6
         Caption = 'SBA Official Base files repository:'
-        ClientHeight = 85
-        ClientWidth = 602
+        ClientHeight = 106
+        ClientWidth = 756
         TabOrder = 0
         object PB_SBAbase: TProgressBar
-          Left = 184
-          Height = 22
-          Top = 42
-          Width = 408
+          Left = 230
+          Height = 28
+          Top = 52
+          Width = 514
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
         end
         object Ed_SBAbase: TEditButton
-          Left = 8
-          Height = 23
-          Top = 8
-          Width = 584
+          Left = 10
+          Height = 29
+          Top = 10
+          Width = 734
           AutoSize = False
           Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Restore default'
-          ButtonWidth = 23
+          ButtonWidth = 29
           DirectInput = False
           Glyph.Data = {
             F6000000424DF600000000000000760000002800000010000000100000000100
@@ -74,10 +75,10 @@ object LibraryForm: TLibraryForm
           Text = 'http://sbabase.accesus.com'
         end
         object B_SBAbaseSurf: TBitBtn
-          Left = 8
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 10
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Surf'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -115,14 +116,14 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF000E0E0E0C0E0E0E57131210A7241F12CF443818D5443818D5241F
             12CF131210A70E0E0E570E0E0E0CFFFFFF00FFFFFF00FFFFFF00
           }
-          OnClick = B_SBAbaseSurfClick
           TabOrder = 2
+          OnClick = B_SBAbaseSurfClick
         end
         object B_SBAbaseGet: TBitBtn
-          Left = 96
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 120
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Get'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -160,38 +161,38 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF0000000000000000000D0D0D960D0D0DFF0D0D0DFF0D0D0DFF0D0D
             0DFF0F0F0DEE0D0D0D8400000000000000000000000000000000
           }
-          OnClick = B_SBAbaseGetClick
           TabOrder = 3
+          OnClick = B_SBAbaseGetClick
         end
       end
       object GB_SBAlibrary: TGroupBox
-        Left = 5
-        Height = 105
-        Top = 179
-        Width = 606
+        Left = 6
+        Height = 131
+        Top = 223
+        Width = 760
         Align = alTop
-        BorderSpacing.Around = 5
+        BorderSpacing.Around = 6
         Caption = 'SBA IP Cores Library repository:'
-        ClientHeight = 85
-        ClientWidth = 602
+        ClientHeight = 106
+        ClientWidth = 756
         TabOrder = 1
         object PB_SBAlibrary: TProgressBar
-          Left = 184
-          Height = 22
-          Top = 42
-          Width = 408
+          Left = 230
+          Height = 28
+          Top = 52
+          Width = 514
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
         end
         object Ed_SBAlibrary: TEditButton
-          Left = 8
-          Height = 23
-          Top = 8
-          Width = 584
+          Left = 10
+          Height = 29
+          Top = 10
+          Width = 734
           AutoSize = False
           Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Restore default'
-          ButtonWidth = 23
+          ButtonWidth = 29
           Glyph.Data = {
             F6000000424DF600000000000000760000002800000010000000100000000100
             0400000000008000000000000000000000001000000010000000000000000000
@@ -204,16 +205,16 @@ object LibraryForm: TLibraryForm
           }
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = Ed_SBAlibraryButtonClick
           PasswordChar = #0
           TabOrder = 1
           Text = 'http://sbalibrary.accesus.com'
+          OnButtonClick = Ed_SBAlibraryButtonClick
         end
         object B_SBAlibrarySurf: TBitBtn
-          Left = 8
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 10
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Surf'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -251,14 +252,14 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF000E0E0E0C0E0E0E57131210A7241F12CF443818D5443818D5241F
             12CF131210A70E0E0E570E0E0E0CFFFFFF00FFFFFF00FFFFFF00
           }
-          OnClick = B_SBAlibrarySurfClick
           TabOrder = 2
+          OnClick = B_SBAlibrarySurfClick
         end
         object B_SBAlibraryGet: TBitBtn
-          Left = 96
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 120
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Get'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -296,38 +297,38 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF0000000000000000000D0D0D960D0D0DFF0D0D0DFF0D0D0DFF0D0D
             0DFF0F0F0DEE0D0D0D8400000000000000000000000000000000
           }
-          OnClick = B_SBAlibraryGetClick
           TabOrder = 3
+          OnClick = B_SBAlibraryGetClick
         end
       end
       object GB_SBAprograms: TGroupBox
-        Left = 5
-        Height = 105
-        Top = 289
-        Width = 606
+        Left = 6
+        Height = 131
+        Top = 360
+        Width = 760
         Align = alTop
-        BorderSpacing.Around = 5
+        BorderSpacing.Around = 6
         Caption = 'SBA Programs repository:'
-        ClientHeight = 85
-        ClientWidth = 602
+        ClientHeight = 106
+        ClientWidth = 756
         TabOrder = 2
         object PB_SBAprograms: TProgressBar
-          Left = 184
-          Height = 22
-          Top = 42
-          Width = 408
+          Left = 230
+          Height = 28
+          Top = 52
+          Width = 514
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
         end
         object Ed_SBAprograms: TEditButton
-          Left = 8
-          Height = 23
-          Top = 8
-          Width = 584
+          Left = 10
+          Height = 29
+          Top = 10
+          Width = 734
           AutoSize = False
           Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Restore default'
-          ButtonWidth = 23
+          ButtonWidth = 29
           Glyph.Data = {
             F6000000424DF600000000000000760000002800000010000000100000000100
             0400000000008000000000000000000000001000000010000000000000000000
@@ -340,16 +341,16 @@ object LibraryForm: TLibraryForm
           }
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = Ed_SBAprogramsButtonClick
           PasswordChar = #0
           TabOrder = 1
           Text = 'http://sbaprograms.accesus.com'
+          OnButtonClick = Ed_SBAprogramsButtonClick
         end
         object B_SBAprogramsSurf: TBitBtn
-          Left = 8
-          Height = 26
-          Top = 41
-          Width = 80
+          Left = 10
+          Height = 32
+          Top = 51
+          Width = 100
           Caption = 'Surf'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -387,14 +388,14 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF000E0E0E0C0E0E0E57131210A7241F12CF443818D5443818D5241F
             12CF131210A70E0E0E570E0E0E0CFFFFFF00FFFFFF00FFFFFF00
           }
-          OnClick = B_SBAprogramsSurfClick
           TabOrder = 2
+          OnClick = B_SBAprogramsSurfClick
         end
         object B_SBAprogramsGet: TBitBtn
-          Left = 96
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 120
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Get'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -432,38 +433,38 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF0000000000000000000D0D0D960D0D0DFF0D0D0DFF0D0D0DFF0D0D
             0DFF0F0F0DEE0D0D0D8400000000000000000000000000000000
           }
-          OnClick = B_SBAprogramsGetClick
           TabOrder = 3
+          OnClick = B_SBAprogramsGetClick
         end
       end
       object GB_SBAsnippets: TGroupBox
-        Left = 5
-        Height = 105
-        Top = 399
-        Width = 606
+        Left = 6
+        Height = 131
+        Top = 497
+        Width = 760
         Align = alTop
-        BorderSpacing.Around = 5
+        BorderSpacing.Around = 6
         Caption = 'SBA Snippets Library repository:'
-        ClientHeight = 85
-        ClientWidth = 602
+        ClientHeight = 106
+        ClientWidth = 756
         TabOrder = 3
         object PB_SBAsnippets: TProgressBar
-          Left = 184
-          Height = 22
-          Top = 42
-          Width = 408
+          Left = 230
+          Height = 28
+          Top = 52
+          Width = 514
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
         end
         object Ed_SBAsnippets: TEditButton
-          Left = 8
-          Height = 23
-          Top = 8
-          Width = 584
+          Left = 10
+          Height = 29
+          Top = 10
+          Width = 734
           AutoSize = False
           Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Restore default'
-          ButtonWidth = 23
+          ButtonWidth = 29
           Glyph.Data = {
             F6000000424DF600000000000000760000002800000010000000100000000100
             0400000000008000000000000000000000001000000010000000000000000000
@@ -476,16 +477,16 @@ object LibraryForm: TLibraryForm
           }
           MaxLength = 0
           NumGlyphs = 1
-          OnButtonClick = Ed_SBAsnippetsButtonClick
           PasswordChar = #0
           TabOrder = 1
           Text = 'http://sbasnippets.accesus.com'
+          OnButtonClick = Ed_SBAsnippetsButtonClick
         end
         object B_SBAsnippetsSurf: TBitBtn
-          Left = 8
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 10
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Surf'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -523,14 +524,14 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF000E0E0E0C0E0E0E57131210A7241F12CF443818D5443818D5241F
             12CF131210A70E0E0E570E0E0E0CFFFFFF00FFFFFF00FFFFFF00
           }
-          OnClick = B_SBAsnippetsSurfClick
           TabOrder = 2
+          OnClick = B_SBAsnippetsSurfClick
         end
         object B_SBAsnippetsGet: TBitBtn
-          Left = 96
-          Height = 26
-          Top = 40
-          Width = 80
+          Left = 120
+          Height = 32
+          Top = 50
+          Width = 100
           Caption = 'Get'
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -568,38 +569,38 @@ object LibraryForm: TLibraryForm
             FF00FFFFFF0000000000000000000D0D0D960D0D0DFF0D0D0DFF0D0D0DFF0D0D
             0DFF0F0F0DEE0D0D0D8400000000000000000000000000000000
           }
-          OnClick = B_SBAsnippetsGetClick
           TabOrder = 3
+          OnClick = B_SBAsnippetsGetClick
         end
       end
       object SB: TStatusBar
         Left = 0
-        Height = 23
-        Top = 519
-        Width = 616
+        Height = 29
+        Top = 650
+        Width = 772
         Panels = <>
       end
       object Panel7: TPanel
         Left = 0
-        Height = 64
+        Height = 80
         Top = 0
-        Width = 616
+        Width = 772
         Align = alTop
         BevelOuter = bvNone
-        ClientHeight = 64
-        ClientWidth = 616
+        ClientHeight = 80
+        ClientWidth = 772
         TabOrder = 5
         object Ed_SBARepoZipFile: TComboBox
-          Left = 15
-          Height = 23
-          Top = 32
-          Width = 584
+          Left = 19
+          Height = 28
+          Top = 40
+          Width = 732
           Anchors = [akTop, akLeft, akRight]
           AutoComplete = True
           AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
           AutoDropDown = True
           AutoSelect = False
-          ItemHeight = 15
+          ItemHeight = 20
           ItemIndex = 0
           Items.Strings = (
             '/archive/master.zip'
@@ -608,10 +609,10 @@ object LibraryForm: TLibraryForm
           Text = '/archive/master.zip'
         end
         object Label10: TLabel
-          Left = 15
-          Height = 15
-          Top = 8
-          Width = 166
+          Left = 19
+          Height = 20
+          Top = 10
+          Width = 208
           Caption = 'Repository Zip Filepath/Branch:'
           ParentColor = False
         end
@@ -619,27 +620,27 @@ object LibraryForm: TLibraryForm
     end
     object IPCores: TTabSheet
       Caption = 'IPCores'
-      ClientHeight = 542
-      ClientWidth = 548
+      ClientHeight = 679
+      ClientWidth = 772
       object Panel2: TPanel
         Left = 0
-        Height = 542
+        Height = 679
         Top = 0
-        Width = 160
+        Width = 200
         Align = alLeft
         BevelOuter = bvNone
         Caption = 'Panel2'
-        ClientHeight = 542
-        ClientWidth = 160
+        ClientHeight = 679
+        ClientWidth = 200
         TabOrder = 0
         object IPCoresFilter: TListViewFilterEdit
-          Left = 3
-          Height = 23
-          Top = 3
-          Width = 154
-          ButtonWidth = 23
+          Left = 4
+          Height = 29
+          Top = 4
+          Width = 192
+          ButtonWidth = 29
           Align = alTop
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           AutoSize = False
           NumGlyphs = 1
           MaxLength = 0
@@ -648,22 +649,23 @@ object LibraryForm: TLibraryForm
           FilteredListview = LV_IPCores
         end
         object LV_IPCores: TListView
-          Left = 3
-          Height = 510
-          Top = 29
-          Width = 154
+          Left = 4
+          Height = 638
+          Top = 37
+          Width = 192
           Align = alClient
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           Columns = <          
             item
               AutoSize = True
               Caption = 'IP Core'
-              MinWidth = 100
-              Width = 53
+              MinWidth = 125
+              Width = 67
             end          
             item
               Caption = 'Path'
               Visible = False
+              Width = 62
             end>
           PopupMenu = ItemsMenu
           ReadOnly = True
@@ -677,39 +679,39 @@ object LibraryForm: TLibraryForm
         end
       end
       object Panel4: TPanel
-        Left = 160
-        Height = 542
+        Left = 200
+        Height = 679
         Top = 0
-        Width = 388
+        Width = 572
         Align = alClient
         BevelOuter = bvNone
-        ClientHeight = 542
-        ClientWidth = 388
+        ClientHeight = 679
+        ClientWidth = 572
         TabOrder = 1
         object Label5: TLabel
-          Left = 5
-          Height = 18
-          Top = 275
-          Width = 383
+          Left = 6
+          Height = 22
+          Top = 345
+          Width = 566
           Align = alTop
           AutoSize = False
-          BorderSpacing.Left = 5
+          BorderSpacing.Left = 6
           Caption = 'Description:'
           Layout = tlCenter
           ParentColor = False
         end
         object IpCoreDescription: TMemo
-          Left = 3
-          Height = 131
-          Top = 293
-          Width = 382
+          Left = 4
+          Height = 166
+          Top = 367
+          Width = 564
           Align = alTop
           Anchors = [akTop, akLeft, akRight, akBottom]
-          BorderSpacing.Left = 3
-          BorderSpacing.Right = 3
+          BorderSpacing.Left = 4
+          BorderSpacing.Right = 4
           Color = clCream
           Font.Color = 16384
-          Font.Height = -10
+          Font.Height = -13
           Lines.Strings = (
             ''
           )
@@ -720,13 +722,13 @@ object LibraryForm: TLibraryForm
         end
         object L_TitleIPCore: TLabel
           Left = 0
-          Height = 20
-          Top = 3
-          Width = 388
+          Height = 25
+          Top = 4
+          Width = 572
           Align = alTop
           Alignment = taCenter
-          BorderSpacing.Top = 3
-          Constraints.MinHeight = 20
+          BorderSpacing.Top = 4
+          Constraints.MinHeight = 25
           Font.Style = [fsBold]
           Layout = tlCenter
           ParentColor = False
@@ -736,12 +738,12 @@ object LibraryForm: TLibraryForm
         object B_AddtoLibrary: TBitBtn
           AnchorSideRight.Control = Panel4
           AnchorSideRight.Side = asrBottom
-          Left = 223
-          Height = 38
-          Top = 491
-          Width = 160
+          Left = 366
+          Height = 48
+          Top = 615
+          Width = 200
           Anchors = [akRight, akBottom]
-          BorderSpacing.Right = 5
+          BorderSpacing.Right = 6
           Caption = 'Add to local library'
           Enabled = False
           Glyph.Data = {
@@ -764,14 +766,14 @@ object LibraryForm: TLibraryForm
             77777777777777777777
           }
           NumGlyphs = 2
-          OnClick = B_AddtoLibraryClick
           TabOrder = 1
+          OnClick = B_AddtoLibraryClick
         end
         object Label1: TLabel
-          Left = 11
-          Height = 15
-          Top = 474
-          Width = 144
+          Left = 14
+          Height = 20
+          Top = 593
+          Width = 180
           Anchors = [akLeft, akBottom]
           Caption = 'New IPcore in remote repo.'
           Font.Color = clGreen
@@ -780,10 +782,10 @@ object LibraryForm: TLibraryForm
           WordWrap = True
         end
         object Label4: TLabel
-          Left = 11
-          Height = 15
-          Top = 489
-          Width = 165
+          Left = 14
+          Height = 20
+          Top = 611
+          Width = 208
           Anchors = [akLeft, akBottom]
           Caption = 'Updates IPCore in remote repo.'
           Font.Color = clBlue
@@ -792,20 +794,20 @@ object LibraryForm: TLibraryForm
           WordWrap = True
         end
         object Label8: TLabel
-          Left = 5
-          Height = 15
-          Top = 458
-          Width = 42
+          Left = 6
+          Height = 20
+          Top = 573
+          Width = 52
           Anchors = [akLeft, akBottom]
           Caption = 'Legend:'
           ParentColor = False
           ParentFont = False
         end
         object Label9: TLabel
-          Left = 11
-          Height = 15
-          Top = 519
-          Width = 142
+          Left = 14
+          Height = 20
+          Top = 649
+          Width = 178
           Anchors = [akLeft, akBottom]
           Caption = 'New IPCore in local library.'
           Font.Color = clRed
@@ -814,10 +816,10 @@ object LibraryForm: TLibraryForm
           WordWrap = True
         end
         object Label11: TLabel
-          Left = 11
-          Height = 15
-          Top = 504
-          Width = 172
+          Left = 14
+          Height = 20
+          Top = 630
+          Width = 217
           Anchors = [akLeft, akBottom]
           Caption = 'Same IPCore in local and remote'
           Font.Color = clBlack
@@ -827,9 +829,9 @@ object LibraryForm: TLibraryForm
         end
         object Panel8: TPanel
           Left = 0
-          Height = 35
-          Top = 424
-          Width = 388
+          Height = 44
+          Top = 533
+          Width = 572
           Align = alTop
           BevelOuter = bvNone
           ChildSizing.HorizontalSpacing = 5
@@ -837,14 +839,14 @@ object LibraryForm: TLibraryForm
           ChildSizing.EnlargeVertical = crsHomogenousChildResize
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 2
-          ClientHeight = 35
-          ClientWidth = 388
+          ClientHeight = 44
+          ClientWidth = 572
           TabOrder = 2
           object B_OpenRepo: TBitBtn
             Left = 2
-            Height = 31
+            Height = 40
             Top = 2
-            Width = 192
+            Width = 284
             BorderSpacing.Around = 2
             Caption = 'Open Repository'
             Glyph.Data = {
@@ -883,14 +885,14 @@ object LibraryForm: TLibraryForm
               FF00FFFFFF000E0E0E0C0E0E0E57131210A7241F12CF443818D5443818D5241F
               12CF131210A70E0E0E570E0E0E0CFFFFFF00FFFFFF00FFFFFF00
             }
-            OnClick = URL_IpCoreClick
             TabOrder = 0
+            OnClick = URL_IpCoreClick
           end
           object B_OpenDS: TBitBtn
-            Left = 199
-            Height = 31
+            Left = 291
+            Height = 40
             Top = 2
-            Width = 187
+            Width = 279
             BorderSpacing.Around = 2
             Caption = 'Open Datasheet'
             Glyph.Data = {
@@ -929,18 +931,18 @@ object LibraryForm: TLibraryForm
               ADFF8C8E8DFF8C8E8DFF8C8E8DFF8C8E8DFF8C8E8DFF8C8E8DFF8C8E8DFF8C8E
               8DFF8C8E8DFFACAEADFFFEFCFB00FFFFFF00FFFFFF00FFFFFF00
             }
-            OnClick = B_OpenDSClick
             TabOrder = 1
+            OnClick = B_OpenDSClick
           end
         end
         object CoreImagePanel: TuEImage
-          Left = 3
-          Height = 246
-          Top = 26
-          Width = 382
+          Left = 4
+          Height = 308
+          Top = 33
+          Width = 564
           Debug = False
           Align = alTop
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           Center = True
           Proportional = True
           Stretch = True
@@ -949,27 +951,27 @@ object LibraryForm: TLibraryForm
     end
     object Programs: TTabSheet
       Caption = 'Programs'
-      ClientHeight = 542
-      ClientWidth = 548
+      ClientHeight = 679
+      ClientWidth = 772
       object Panel3: TPanel
         Left = 0
-        Height = 542
+        Height = 679
         Top = 0
-        Width = 160
+        Width = 200
         Align = alLeft
         BevelOuter = bvNone
         Caption = 'Panel3'
-        ClientHeight = 542
-        ClientWidth = 160
+        ClientHeight = 679
+        ClientWidth = 200
         TabOrder = 0
         object ProgramsFilter: TListViewFilterEdit
-          Left = 3
-          Height = 23
-          Top = 3
-          Width = 154
-          ButtonWidth = 23
+          Left = 4
+          Height = 29
+          Top = 4
+          Width = 192
+          ButtonWidth = 29
           Align = alTop
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           AutoSize = False
           NumGlyphs = 1
           MaxLength = 0
@@ -977,22 +979,23 @@ object LibraryForm: TLibraryForm
           FilteredListview = LV_Programs
         end
         object LV_Programs: TListView
-          Left = 3
-          Height = 510
-          Top = 29
-          Width = 154
+          Left = 4
+          Height = 638
+          Top = 37
+          Width = 192
           Align = alClient
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           Columns = <          
             item
               AutoSize = True
               Caption = 'Programs'
-              MinWidth = 100
-              Width = 66
+              MinWidth = 125
+              Width = 83
             end          
             item
               Caption = 'Path'
               Visible = False
+              Width = 62
             end>
           PopupMenu = ItemsMenu
           ReadOnly = True
@@ -1006,20 +1009,20 @@ object LibraryForm: TLibraryForm
         end
       end
       object Panel5: TPanel
-        Left = 160
-        Height = 542
+        Left = 200
+        Height = 679
         Top = 0
-        Width = 388
+        Width = 572
         Align = alClient
         BevelOuter = bvNone
-        ClientHeight = 542
-        ClientWidth = 388
+        ClientHeight = 679
+        ClientWidth = 572
         TabOrder = 1
         object Label2: TLabel
-          Left = 5
-          Height = 15
-          Top = 490
-          Width = 141
+          Left = 6
+          Height = 20
+          Top = 613
+          Width = 178
           Anchors = [akLeft, akBottom]
           Caption = 'The Items in green are new'
           Font.Color = clGreen
@@ -1030,12 +1033,12 @@ object LibraryForm: TLibraryForm
         object B_AddtoPrograms: TBitBtn
           AnchorSideRight.Control = Panel5
           AnchorSideRight.Side = asrBottom
-          Left = 223
-          Height = 38
-          Top = 490
-          Width = 160
+          Left = 366
+          Height = 48
+          Top = 613
+          Width = 200
           Anchors = [akRight, akBottom]
-          BorderSpacing.Right = 5
+          BorderSpacing.Right = 6
           Caption = 'Add to local library'
           Enabled = False
           Glyph.Data = {
@@ -1058,25 +1061,25 @@ object LibraryForm: TLibraryForm
             77777777777777777777
           }
           NumGlyphs = 2
-          OnClick = B_AddtoProgramsClick
           TabOrder = 0
+          OnClick = B_AddtoProgramsClick
         end
         inline PrgDescription: TSynEdit
-          Left = 3
-          Height = 474
+          Left = 4
+          Height = 592
           Top = 0
-          Width = 382
+          Width = 564
           Align = alTop
-          BorderSpacing.Left = 3
-          BorderSpacing.Right = 3
-          Font.Height = -13
+          BorderSpacing.Left = 4
+          BorderSpacing.Right = 4
+          Font.Height = -16
           Font.Name = 'Courier New'
           Font.Pitch = fpFixed
           Font.Quality = fqCleartype
           ParentColor = False
           ParentFont = False
           TabOrder = 1
-          Gutter.Width = 29
+          Gutter.Width = 37
           Gutter.MouseActions = <>
           RightGutter.Width = 0
           RightGutter.MouseActions = <>
@@ -1527,7 +1530,7 @@ object LibraryForm: TLibraryForm
           LineHighlightColor.Foreground = clNone
           inline SynLeftGutterPartList1: TSynGutterPartList
             object SynGutterLineNumber1: TSynGutterLineNumber
-              Width = 17
+              Width = 21
               MouseActions = <>
               MarkupInfo.Background = clBtnFace
               MarkupInfo.Foreground = clNone
@@ -1537,12 +1540,13 @@ object LibraryForm: TLibraryForm
               LeadingZeros = False
             end
             object SynGutterSeparator1: TSynGutterSeparator
-              Width = 2
+              Width = 3
               MouseActions = <>
               MarkupInfo.Background = clWhite
               MarkupInfo.Foreground = clGray
             end
             object SynGutterCodeFolding1: TSynGutterCodeFolding
+              Width = 13
               MouseActions = <>
               MarkupInfo.Background = clNone
               MarkupInfo.Foreground = clGray
@@ -1555,27 +1559,27 @@ object LibraryForm: TLibraryForm
     end
     object Snippets: TTabSheet
       Caption = 'Snippets'
-      ClientHeight = 542
-      ClientWidth = 672
+      ClientHeight = 679
+      ClientWidth = 772
       object Panel1: TPanel
         Left = 0
-        Height = 542
+        Height = 679
         Top = 0
-        Width = 160
+        Width = 200
         Align = alLeft
         BevelOuter = bvNone
         Caption = 'Panel1'
-        ClientHeight = 542
-        ClientWidth = 160
+        ClientHeight = 679
+        ClientWidth = 200
         TabOrder = 0
         object SnippetsFilter: TListViewFilterEdit
-          Left = 3
-          Height = 23
-          Top = 3
-          Width = 154
-          ButtonWidth = 23
+          Left = 4
+          Height = 29
+          Top = 4
+          Width = 192
+          ButtonWidth = 29
           Align = alTop
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           AutoSize = False
           NumGlyphs = 1
           MaxLength = 0
@@ -1583,22 +1587,23 @@ object LibraryForm: TLibraryForm
           FilteredListview = LV_Snippets
         end
         object LV_Snippets: TListView
-          Left = 3
-          Height = 510
-          Top = 29
-          Width = 154
+          Left = 4
+          Height = 638
+          Top = 37
+          Width = 192
           Align = alClient
-          BorderSpacing.Around = 3
+          BorderSpacing.Around = 4
           Columns = <          
             item
               AutoSize = True
               Caption = 'Snippet'
-              MinWidth = 100
-              Width = 55
+              MinWidth = 125
+              Width = 71
             end          
             item
               Caption = 'Path'
               Visible = False
+              Width = 62
             end>
           PopupMenu = ItemsMenu
           ReadOnly = True
@@ -1612,20 +1617,20 @@ object LibraryForm: TLibraryForm
         end
       end
       object Panel6: TPanel
-        Left = 160
-        Height = 542
+        Left = 200
+        Height = 679
         Top = 0
-        Width = 512
+        Width = 572
         Align = alClient
         BevelOuter = bvNone
-        ClientHeight = 542
-        ClientWidth = 512
+        ClientHeight = 679
+        ClientWidth = 572
         TabOrder = 1
         object Label3: TLabel
-          Left = 5
-          Height = 15
-          Top = 490
-          Width = 141
+          Left = 6
+          Height = 20
+          Top = 613
+          Width = 178
           Anchors = [akLeft, akBottom]
           Caption = 'The Items in green are new'
           Font.Color = clGreen
@@ -1636,12 +1641,12 @@ object LibraryForm: TLibraryForm
         object B_AddtoSnippets: TBitBtn
           AnchorSideRight.Control = Panel6
           AnchorSideRight.Side = asrBottom
-          Left = 347
-          Height = 38
-          Top = 490
-          Width = 160
+          Left = 366
+          Height = 48
+          Top = 613
+          Width = 200
           Anchors = [akRight, akBottom]
-          BorderSpacing.Right = 5
+          BorderSpacing.Right = 6
           Caption = 'Add to local library'
           Enabled = False
           Glyph.Data = {
@@ -1664,25 +1669,25 @@ object LibraryForm: TLibraryForm
             77777777777777777777
           }
           NumGlyphs = 2
-          OnClick = B_AddtoSnippetsClick
           TabOrder = 0
+          OnClick = B_AddtoSnippetsClick
         end
         inline SnpDescription: TSynEdit
-          Left = 3
-          Height = 474
+          Left = 4
+          Height = 592
           Top = 0
-          Width = 506
+          Width = 564
           Align = alTop
-          BorderSpacing.Left = 3
-          BorderSpacing.Right = 3
-          Font.Height = -13
+          BorderSpacing.Left = 4
+          BorderSpacing.Right = 4
+          Font.Height = -16
           Font.Name = 'Courier New'
           Font.Pitch = fpFixed
           Font.Quality = fqCleartype
           ParentColor = False
           ParentFont = False
           TabOrder = 1
-          Gutter.Width = 29
+          Gutter.Width = 37
           Gutter.MouseActions = <>
           RightGutter.Width = 0
           RightGutter.MouseActions = <>
@@ -2133,7 +2138,7 @@ object LibraryForm: TLibraryForm
           LineHighlightColor.Foreground = clNone
           inline SynLeftGutterPartList1: TSynGutterPartList
             object SynGutterLineNumber1: TSynGutterLineNumber
-              Width = 17
+              Width = 21
               MouseActions = <>
               MarkupInfo.Background = clBtnFace
               MarkupInfo.Foreground = clNone
@@ -2143,12 +2148,13 @@ object LibraryForm: TLibraryForm
               LeadingZeros = False
             end
             object SynGutterSeparator1: TSynGutterSeparator
-              Width = 2
+              Width = 3
               MouseActions = <>
               MarkupInfo.Background = clWhite
               MarkupInfo.Foreground = clGray
             end
             object SynGutterCodeFolding1: TSynGutterCodeFolding
+              Width = 13
               MouseActions = <>
               MarkupInfo.Background = clNone
               MarkupInfo.Foreground = clGray
@@ -2161,8 +2167,8 @@ object LibraryForm: TLibraryForm
     end
   end
   object ItemsMenu: TPopupMenu
-    left = 344
-    top = 168
+    Left = 430
+    Top = 210
     object MenuItem1: TMenuItem
       Caption = 'Open Item Folder'
       OnClick = MenuItem1Click
@@ -2177,18 +2183,18 @@ object LibraryForm: TLibraryForm
     HTMLFontSize = fs03
     Title = 'Untitled'
     UseBackground = False
-    left = 232
-    top = 168
+    Left = 290
+    Top = 210
   end
   object IniStor: TIniPropStorage
     StoredValues = <>
-    left = 448
-    top = 168
+    Left = 560
+    Top = 210
   end
   object SynVHDLSyn1: TSynVHDLSyn
     DefaultFilter = 'VHDL Files (*.vhd;*.vhdl)|*.vhd;*.vhdl'
     Enabled = False
-    left = 216
-    top = 231
+    Left = 270
+    Top = 289
   end
 end
