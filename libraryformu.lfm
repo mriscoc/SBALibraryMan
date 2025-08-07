@@ -1,7 +1,7 @@
 object LibraryForm: TLibraryForm
-  Left = 640
+  Left = 564
   Height = 712
-  Top = 245
+  Top = 274
   Width = 780
   Caption = 'Library Manager'
   ClientHeight = 712
@@ -19,9 +19,9 @@ object LibraryForm: TLibraryForm
     Height = 712
     Top = 0
     Width = 780
-    ActivePage = UpdateRep
+    ActivePage = Snippets
     Align = alClient
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 0
     object UpdateRep: TTabSheet
       Caption = 'Update repositories'
@@ -739,8 +739,8 @@ object LibraryForm: TLibraryForm
           AnchorSideRight.Control = Panel4
           AnchorSideRight.Side = asrBottom
           Left = 366
-          Height = 48
-          Top = 615
+          Height = 45
+          Top = 624
           Width = 200
           Anchors = [akRight, akBottom]
           BorderSpacing.Right = 6
@@ -768,64 +768,6 @@ object LibraryForm: TLibraryForm
           NumGlyphs = 2
           TabOrder = 1
           OnClick = B_AddtoLibraryClick
-        end
-        object Label1: TLabel
-          Left = 14
-          Height = 20
-          Top = 593
-          Width = 180
-          Anchors = [akLeft, akBottom]
-          Caption = 'New IPcore in remote repo.'
-          Font.Color = clGreen
-          ParentColor = False
-          ParentFont = False
-          WordWrap = True
-        end
-        object Label4: TLabel
-          Left = 14
-          Height = 20
-          Top = 611
-          Width = 208
-          Anchors = [akLeft, akBottom]
-          Caption = 'Updates IPCore in remote repo.'
-          Font.Color = clBlue
-          ParentColor = False
-          ParentFont = False
-          WordWrap = True
-        end
-        object Label8: TLabel
-          Left = 6
-          Height = 20
-          Top = 573
-          Width = 52
-          Anchors = [akLeft, akBottom]
-          Caption = 'Legend:'
-          ParentColor = False
-          ParentFont = False
-        end
-        object Label9: TLabel
-          Left = 14
-          Height = 20
-          Top = 649
-          Width = 178
-          Anchors = [akLeft, akBottom]
-          Caption = 'New IPCore in local library.'
-          Font.Color = clRed
-          ParentColor = False
-          ParentFont = False
-          WordWrap = True
-        end
-        object Label11: TLabel
-          Left = 14
-          Height = 20
-          Top = 630
-          Width = 217
-          Anchors = [akLeft, akBottom]
-          Caption = 'Same IPCore in local and remote'
-          Font.Color = clBlack
-          ParentColor = False
-          ParentFont = False
-          WordWrap = True
         end
         object Panel8: TPanel
           Left = 0
@@ -947,6 +889,76 @@ object LibraryForm: TLibraryForm
           Proportional = True
           Stretch = True
         end
+        object LibVersionEd: TLabeledEdit
+          Left = 466
+          Height = 28
+          Top = 585
+          Width = 100
+          EditLabel.Height = 28
+          EditLabel.Width = 89
+          EditLabel.Caption = 'Local version:'
+          LabelPosition = lpLeft
+          ReadOnly = True
+          TabOrder = 3
+        end
+        object Label8: TLabel
+          Left = 6
+          Height = 20
+          Top = 573
+          Width = 52
+          Anchors = [akLeft, akBottom]
+          Caption = 'Legend:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label1: TLabel
+          Left = 14
+          Height = 20
+          Top = 593
+          Width = 180
+          Anchors = [akLeft, akBottom]
+          Caption = 'New IPcore in remote repo.'
+          Font.Color = clGreen
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label4: TLabel
+          Left = 14
+          Height = 20
+          Top = 611
+          Width = 208
+          Anchors = [akLeft, akBottom]
+          Caption = 'Updates IPCore in remote repo.'
+          Font.Color = clBlue
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label11: TLabel
+          Left = 14
+          Height = 20
+          Top = 630
+          Width = 217
+          Anchors = [akLeft, akBottom]
+          Caption = 'Same IPCore in local and remote'
+          Font.Color = clBlack
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label9: TLabel
+          Left = 14
+          Height = 20
+          Top = 649
+          Width = 178
+          Anchors = [akLeft, akBottom]
+          Caption = 'New IPCore in local library.'
+          Font.Color = clRed
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
       end
     end
     object Programs: TTabSheet
@@ -1021,10 +1033,10 @@ object LibraryForm: TLibraryForm
         object Label2: TLabel
           Left = 6
           Height = 20
-          Top = 613
-          Width = 178
+          Top = 601
+          Width = 195
           Anchors = [akLeft, akBottom]
-          Caption = 'The Items in green are new'
+          Caption = 'New program in remote repo'
           Font.Color = clGreen
           ParentColor = False
           ParentFont = False
@@ -1034,8 +1046,8 @@ object LibraryForm: TLibraryForm
           AnchorSideRight.Control = Panel5
           AnchorSideRight.Side = asrBottom
           Left = 366
-          Height = 48
-          Top = 613
+          Height = 45
+          Top = 624
           Width = 200
           Anchors = [akRight, akBottom]
           BorderSpacing.Right = 6
@@ -1066,7 +1078,7 @@ object LibraryForm: TLibraryForm
         end
         inline PrgDescription: TSynEdit
           Left = 4
-          Height = 592
+          Height = 570
           Top = 0
           Width = 564
           Align = alTop
@@ -1554,6 +1566,64 @@ object LibraryForm: TLibraryForm
               MouseActionsCollapsed = <>
             end
           end
+        end
+        object Label6: TLabel
+          Left = 6
+          Height = 20
+          Top = 618
+          Width = 226
+          Anchors = [akLeft, akBottom]
+          Caption = 'Updated program in remote repo.'
+          Font.Color = clBlue
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label12: TLabel
+          Left = 6
+          Height = 20
+          Top = 635
+          Width = 324
+          Anchors = [akLeft, akBottom]
+          Caption = 'Same program version in local and remote repos'
+          Font.Color = clBlack
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label13: TLabel
+          Left = 6
+          Height = 20
+          Top = 582
+          Width = 52
+          Anchors = [akLeft, akBottom]
+          Caption = 'Legend:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label14: TLabel
+          Left = 6
+          Height = 20
+          Top = 652
+          Width = 303
+          Anchors = [akLeft, akBottom]
+          Caption = 'New program or unknow version in local repo'
+          Font.Color = clRed
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object PrgVersionEd: TLabeledEdit
+          Left = 466
+          Height = 28
+          Top = 585
+          Width = 100
+          EditLabel.Height = 28
+          EditLabel.Width = 89
+          EditLabel.Caption = 'Local version:'
+          LabelPosition = lpLeft
+          ReadOnly = True
+          TabOrder = 2
         end
       end
     end
@@ -1626,24 +1696,12 @@ object LibraryForm: TLibraryForm
         ClientHeight = 679
         ClientWidth = 572
         TabOrder = 1
-        object Label3: TLabel
-          Left = 6
-          Height = 20
-          Top = 613
-          Width = 178
-          Anchors = [akLeft, akBottom]
-          Caption = 'The Items in green are new'
-          Font.Color = clGreen
-          ParentColor = False
-          ParentFont = False
-          WordWrap = True
-        end
         object B_AddtoSnippets: TBitBtn
           AnchorSideRight.Control = Panel6
           AnchorSideRight.Side = asrBottom
           Left = 366
-          Height = 48
-          Top = 613
+          Height = 45
+          Top = 624
           Width = 200
           Anchors = [akRight, akBottom]
           BorderSpacing.Right = 6
@@ -1674,7 +1732,7 @@ object LibraryForm: TLibraryForm
         end
         inline SnpDescription: TSynEdit
           Left = 4
-          Height = 592
+          Height = 570
           Top = 0
           Width = 564
           Align = alTop
@@ -2162,6 +2220,76 @@ object LibraryForm: TLibraryForm
               MouseActionsCollapsed = <>
             end
           end
+        end
+        object SnpVersionEd: TLabeledEdit
+          Left = 466
+          Height = 28
+          Top = 585
+          Width = 100
+          EditLabel.Height = 28
+          EditLabel.Width = 89
+          EditLabel.Caption = 'Local version:'
+          LabelPosition = lpLeft
+          ReadOnly = True
+          TabOrder = 2
+        end
+        object Label15: TLabel
+          Left = 6
+          Height = 20
+          Top = 573
+          Width = 52
+          Anchors = [akLeft, akBottom]
+          Caption = 'Legend:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 14
+          Height = 20
+          Top = 593
+          Width = 161
+          Anchors = [akLeft, akBottom]
+          Caption = 'New file in remote repo.'
+          Font.Color = clGreen
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label7: TLabel
+          Left = 14
+          Height = 20
+          Top = 611
+          Width = 225
+          Anchors = [akLeft, akBottom]
+          Caption = 'Updates available in remote repo.'
+          Font.Color = clBlue
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label16: TLabel
+          Left = 14
+          Height = 20
+          Top = 630
+          Width = 262
+          Anchors = [akLeft, akBottom]
+          Caption = 'Same version in local and remote repos'
+          Font.Color = clBlack
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object Label17: TLabel
+          Left = 14
+          Height = 20
+          Top = 649
+          Width = 182
+          Anchors = [akLeft, akBottom]
+          Caption = 'New version in local library.'
+          Font.Color = clRed
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
         end
       end
     end

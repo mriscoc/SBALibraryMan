@@ -23,7 +23,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MinorVersionNr Value="1"/>
-      <RevisionNr Value="4"/>
+      <RevisionNr Value="5"/>
       <BuildNr Value="1"/>
       <StringTable CompanyName="uE Peru" FileDescription="SBA library manager" LegalCopyright="(c) Miguel Risco-Castillo"/>
     </VersionInfo>
@@ -67,6 +67,14 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY
+-dDEBUG"/>
+            <OtherDefines Count="2">
+              <Define0 Value="SBALIBRARY"/>
+              <Define1 Value="DEBUG"/>
+            </OtherDefines>
+          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release x32">
@@ -102,6 +110,12 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY"/>
+            <OtherDefines Count="1">
+              <Define0 Value="SBALIBRARY"/>
+            </OtherDefines>
+          </Other>
         </CompilerOptions>
       </Item3>
       <Item4 Name="Release x64">
@@ -139,6 +153,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY"/>
+          </Other>
         </CompilerOptions>
       </Item4>
       <Item5 Name="Release Linux x64">
@@ -176,6 +193,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY"/>
+          </Other>
         </CompilerOptions>
       </Item5>
       <Item6 Name="Release Linux x32">
@@ -213,6 +233,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY"/>
+          </Other>
         </CompilerOptions>
       </Item6>
       <Item7 Name="Release Linux ARM">
@@ -251,6 +274,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dSBALIBRARY"/>
+          </Other>
         </CompilerOptions>
       </Item7>
     </BuildModes>
@@ -261,36 +287,39 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="9">
+    <RequiredPackages Count="10">
       <Item1>
-        <PackageName Value="ExtraHighlighters_Dsgn"/>
+        <PackageName Value="AnchorDocking"/>
       </Item1>
       <Item2>
-        <PackageName Value="ExtraHighlighters"/>
+        <PackageName Value="uEControls"/>
       </Item2>
       <Item3>
-        <PackageName Value="internettools"/>
+        <PackageName Value="BGRABitmapPack"/>
       </Item3>
       <Item4>
-        <PackageName Value="fpc_markdown"/>
+        <PackageName Value="ExtraHighlighters_Dsgn"/>
       </Item4>
       <Item5>
-        <PackageName Value="bgracontrols"/>
+        <PackageName Value="ExtraHighlighters"/>
       </Item5>
       <Item6>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="internettools"/>
       </Item6>
       <Item7>
-        <PackageName Value="uEControls"/>
+        <PackageName Value="fpc_markdown"/>
       </Item7>
       <Item8>
-        <PackageName Value="LazControls"/>
+        <PackageName Value="SynEdit"/>
       </Item8>
       <Item9>
-        <PackageName Value="LCL"/>
+        <PackageName Value="LazControls"/>
       </Item9>
+      <Item10>
+        <PackageName Value="LCL"/>
+      </Item10>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="7">
       <Unit0>
         <Filename Value="SBAlibrary.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -304,42 +333,32 @@
         <UnitName Value="LibraryFormU"/>
       </Unit1>
       <Unit2>
-        <Filename Value="sbaprogcontrlru.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="SBAProgContrlrU"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="sbaprogramu.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="SBAProgramU"/>
-      </Unit3>
-      <Unit4>
         <Filename Value="utilsu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="UtilsU"/>
-      </Unit4>
-      <Unit5>
+      </Unit2>
+      <Unit3>
         <Filename Value="configu.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ConfigForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ConfigU"/>
-      </Unit5>
-      <Unit6>
+      </Unit3>
+      <Unit4>
         <Filename Value="debugu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DebugU"/>
-      </Unit6>
-      <Unit7>
+      </Unit4>
+      <Unit5>
         <Filename Value="dwfileu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DwFileU"/>
-      </Unit7>
-      <Unit8>
+      </Unit5>
+      <Unit6>
         <Filename Value="versionsupportu.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit8>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -367,6 +386,12 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dSBALIBRARY"/>
+      <OtherDefines Count="1">
+        <Define0 Value="SBALIBRARY"/>
+      </OtherDefines>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

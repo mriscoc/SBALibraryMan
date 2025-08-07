@@ -2,14 +2,14 @@ unit ConfigU;
 {
  Program configuration values
  Author: Miguel A. Risco-Castillo
- Version 1.1.1
+ Version 2.0.2
 }
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LazFileUtils, Forms, Dialogs, IniFiles
+  Classes, SysUtils, FileUtil, LazFileUtils, Forms, Dialogs, IniFiles, controls
 {$IFDEF UNIX}
   ,Process
 {$ENDIF}
@@ -21,21 +21,24 @@ const
   DefSnippetsDir='SBA-Snippets';
   DefProgramsDir='SBA-Programs';
   DefProjectsDir='sbaprojects';
+  DefThemeDir='theme';
+  DefPluginsDir='plugins';
+  DefDocDir='doc';
 
+  cSBARepoZipFile='/archive/master.zip';
   cSBAbaseZipFile='sbamaster.zip';
   cSBAlibraryZipFile='sbalibrary.zip';
   cSBAprogramsZipFile='sbaprograms.zip';
   cSBAsnippetsZipFile='sbasnippets.zip';
-  cSBARepoZipFile='/archive/master.zip';
   cSBAthemeZipFile='theme.zip';
+  cSBApluginsZipFile='plugins.zip';
   cSBADocZipFile='doc.zip';
   cLocSBAprjparams='lprjparams.ini'; // Save the local parameters for each project file
-  cSBApluginsZipFile='plugins.zip';
   cDefNewFileName='NewFile';
 
 var
   ConfigFile,AppDir,ConfigDir,LibraryDir,SnippetsDir,ProgramsDir,
-  ProjectsDir,SBAbaseDir,ThemeDir,ThemeFile,TempFolder:string;
+  ProjectsDir,SBAbaseDir,ThemeDir,PluginsDir,DocDir,ThemeFile,TempFolder:string;
   LocSBAPrjParams:string;  //Local associated Prj parameters ini file
   DefAuthor:string;
   LibAsReadOnly:Boolean;
@@ -57,7 +60,11 @@ procedure UpdateLists;
 
 implementation
 
+{$IFDEF SBALIBRARY}
+uses UtilsU, DebugU;
+{$ELSE}
 uses UtilsU, DebugU, EditorU, SBAProgramU;
+{$ENDIF}
 
 function SBAVersionToStr(v: integer): string;
 begin
@@ -116,13 +123,16 @@ begin
     SnippetsDir:=ReadString('TApplication.MainForm','SnippetsDir',ConfigDir+DefSnippetsDir+PathDelim);
     ProgramsDir:=ReadString('TApplication.MainForm','ProgramsDir',ConfigDir+DefProgramsDir+PathDelim);
     ProjectsDir:=ReadString('TApplication.MainForm','ProjectsDir',GetUserDir+DefProjectsDir+PathDelim);
-    ThemeDir:=ReadString('TApplication.MainForm','ThemeDir',ConfigDir+'theme'+PathDelim);
+    ThemeDir:=ReadString('TApplication.MainForm','ThemeDir',ConfigDir+DefThemeDir+PathDelim);
+    PluginsDir:=ReadString('TApplication.MainForm','PluginsDir',ConfigDir+DefPluginsDir+PathDelim);
+    DocDir:=ReadString('TApplication.MainForm','DocDir',ConfigDir+DefDocDir+PathDelim);
     LocSBAPrjParams:=ConfigDir+cLocSBAprjparams;
     DefAuthor:=ReadString('TApplication.MainForm','DefAuthor','Author');
-
+    {$IFNDEF SBALIBRARY}
     EditorFontName:=ReadString('TApplication.MainForm','EditorFontName','Courier New');
     EditorFontSize:=ReadInteger('TApplication.MainForm','EditorFontSize',10);
     if Screen.Fonts.IndexOf(EditorFontName)=-1 then EditorFontName:='Courier New';
+    {$ENDIF}
     LibAsReadOnly:=ReadBool('TApplication.MainForm','LibAsReadOnly',true);
     AutoOpenPrjF:=ReadBool('TApplication.MainForm','AutoOpenPrjF',true);
     AutoOpenEdFiles:=ReadBool('TApplication.MainForm','AutoOpenEdFiles',true);
@@ -151,6 +161,10 @@ begin
     WriteString(Section,'SnippetsDir',SnippetsDir);
     WriteString(Section,'ProgramsDir',ProgramsDir);
     WriteString(Section,'ProjectsDir',ProjectsDir);
+    WriteString(Section,'SBAbaseDir',SBAbaseDir);
+    WriteString(Section,'ThemeDir',ThemeDir);
+    WriteString(Section,'PluginsDir',PluginsDir);
+    WriteString(Section,'DocDir',DocDir);
     WriteString(Section,'DefAuthor',DefAuthor);
     WriteBool(Section,'LibAsReadOnly',LibAsReadOnly);
     WriteBool(Section,'AutoOpenPrjF',AutoOpenPrjF);
@@ -158,9 +172,10 @@ begin
     WriteBool(Section,'CtrlAdvMode',CtrlAdvMode);
     WriteBool(Section,'EnableFilesMon',EnableFilesMon);
     WriteBool(Section,'BakTimeStamp',BakTimeStamp);
+    {$IFNDEF SBALIBRARY}
     WriteString(Section,'EditorFontName',EditorFontName);
     WriteInteger(Section,'EditorFontSize',EditorFontSize);
-    WriteString(Section,'SBAbaseDir',SBAbaseDir);
+    {$ENDIF}
     WriteInteger(Section,'SBAversion',SBAversion);
     WriteInteger(Section,'SelTheme',SelTheme);
     result:=true;
@@ -169,11 +184,30 @@ begin
   end;
 end;
 
+function CheckFolder(msg,setdir,zipfile:string):boolean;
+var
+  confirm:TModalResult;
+begin
+  Info('SetUpConfig',msg+'= '+setdir);
+  If FileExists(AppDir+zipfile) then
+  begin
+    if DirectoryExistsUTF8(setdir) then
+    begin
+      confirm := MessageDlg('Update found for '+msg+', replace it or ignore the update?', mtConfirmation, [mbYes, mbNo, mbIgnore], 0);
+      case confirm of
+        mrYes: Result:= UnzipFolder(msg, setdir, AppDir+zipfile);
+        mrIgnore: Result:= DeleteFile(AppDir+zipfile);
+      else
+        Result:= true;
+      end;
+    end else Result := UnzipFolder(msg, setdir, AppDir+zipfile);
+  end else Result := DirectoryExistsUTF8(setdir);
+end;
+
 function SetUpConfig: boolean;
 {$IFDEF UNIX}
 var s:string; //dummy string for RunCommandIndir
 {$ENDIF}
-
 begin
   result:=false;
   Info('SetUpConfig','ConfigDir= '+ConfigDir);
@@ -193,64 +227,17 @@ begin
       If Not ForceDirectoriesUTF8(ProjectsDir) Then Exit;
     end;
 
-  Info('SetUpConfig','LibraryDir= '+LibraryDir);
-  If Not DirectoryExistsUTF8(LibraryDir) then
-    If not Unzip(AppDir+cSBAlibraryZipFile,ConfigDir) then
-    begin
-      ShowMessage('Failed to create SBA library folder: '+LibraryDir);
-      Exit;
-    end;
-
-  Info('SetUpConfig','SnippetsDir= '+SnippetsDir);
-  If Not DirectoryExistsUTF8(SnippetsDir) then
-    If not Unzip(AppDir+cSBAsnippetsZipFile,ConfigDir) then
-    begin
-      ShowMessage('Failed to create code snippets folder: '+SnippetsDir);
-//      Exit; // Non Critical
-    end;
-
-  Info('SetUpConfig','ProgramsDir= '+ProgramsDir);
-  If Not DirectoryExistsUTF8(ProgramsDir) then
-    If not Unzip(AppDir+cSBAprogramsZipFile,ConfigDir) then
-    begin
-      ShowMessage('Failed to create code programs folder: '+ProgramsDir);
-//      Exit; // Non Critical
-    end;
-
-  Info('SetUpConfig','SBAbaseDir= '+SBAbaseDir);
-  If FileExists(AppDir+cSBABaseZipFile) then
-    If Unzip(AppDir+cSBABaseZipFile,ConfigDir) then DeleteFile(AppDir+cSBABaseZipFile)
-    else begin
-      ShowMessage('Failed to create SBA base folder: '+SBAbaseDir);
-      Exit;
-    end;
-
-  Info('SetUpConfig','ThemeDir= '+ConfigDir+'theme');
-  If FileExists(AppDir+cSBAthemeZipFile) then
-    If Unzip(AppDir+cSBAthemeZipFile,ConfigDir+'theme') then DeleteFile(AppDir+cSBAthemeZipFile)
-    else begin
-      ShowMessage('Failed to create theme folder: '+ConfigDir+'theme');
-//      Exit; // Non Critical
-    end;
-
-  Info('SetUpConfig','PlugInsDir= '+ConfigDir+'plugins');
-  If FileExists(AppDir+cSBApluginsZipFile) then
-    If Unzip(AppDir+cSBApluginsZipFile,ConfigDir+'plugins') then DeleteFile(AppDir+cSBApluginsZipFile)
-    else begin
-      ShowMessage('Failed to create plugins folder: '+ConfigDir+'plugins');
-//      Exit;  // Non Critical
-    end;
-
-  Info('SetUpConfig','DocDir= '+ConfigDir+'doc');
-  If FileExists(AppDir+cSBADocZipFile) then
-    If Unzip(AppDir+cSBADocZipFile,ConfigDir+'doc') then DeleteFile(AppDir+cSBADocZipFile)
-    else begin
-      ShowMessage('Failed to create doc help folder: '+ConfigDir+'doc');
-//      Exit;  // Non Critical
-    end;
-
+  if not CheckFolder('SBA library',LibraryDir,cSBAlibraryZipFile) then exit;
+  if not CheckFolder('code snippets',SnippetsDir,cSBAsnippetsZipFile) then exit;
+  if not CheckFolder('code programs',ProgramsDir,cSBAprogramsZipFile) then exit;
+  if not CheckFolder('SBA base',SBAbaseDir,cSBAbaseZipFile) then exit;
+  if not CheckFolder('app theme',ThemeDir,cSBAthemeZipFile) then exit;
+  if not CheckFolder('app plugins',PluginsDir,cSBApluginsZipFile) then exit;
+  if not CheckFolder('doc help',DocDir,cSBADocZipFile) then exit;
+  {$IFNDEF SBALIBRARY}
   if FileExists(AppDir+cSBADefPrgTemplate) then if CopyFile(AppDir+cSBADefPrgTemplate,ConfigDir+cSBADefPrgTemplate) then DeleteFile(AppDir+cSBADefPrgTemplate);
   if FileExists(AppDir+cSBAAdvPrgTemplate) then if CopyFile(AppDir+cSBAAdvPrgTemplate,ConfigDir+cSBAAdvPrgTemplate) then DeleteFile(AppDir+cSBAAdvPrgTemplate);
+  {$ENDIF}
   if FileExists(AppDir+'newbanner.gif') then if CopyFile(AppDir+'banner.gif',ConfigDir+'newbanner.gif') then DeleteFile(AppDir+'newbanner.gif');
   if FileExists(AppDir+'templates.ini') then if CopyFile(AppDir+'templates.ini',ConfigDir+'templates.ini') then DeleteFile(AppDir+'templates.ini');
 

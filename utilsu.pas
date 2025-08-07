@@ -1,5 +1,9 @@
 unit UtilsU;
-
+{
+ Utily functions
+ Author: Miguel A. Risco-Castillo
+ Version 2.0.2
+}
 {$mode objfpc}{$H+}
 
 interface
@@ -16,6 +20,7 @@ function GetAllFileNamesOnly(const dir,mask:string; list:TStrings):boolean;
 procedure GetAllFileNamesOnlyEqPaths(const dir,mask:string; list:TStrings);
 function UnZip(f,p:string):boolean;
 function GetZipMainFolder(f:string):string;
+function UnzipFolder(msg,setdir,zipfile:string):boolean;
 function IsDirectoryEmpty(const directory : string) : boolean;
 function GetPosList(s: string; list: Tstrings; start:integer=0): integer;
 function DirReplace(s,d:string): boolean;
@@ -25,6 +30,8 @@ function MoveDir(const fromDir, toDir: string): Boolean;
 Function GetDeepestDir(const aFilename:string):string;
 function VCmpr(v1,v2:string):integer;
 procedure PauseXms(const Milliseconds: longword);
+function GetVersion(textlines:TStrings):string;
+function GetVersionFrom(fname:string):string;
 
 implementation
 
@@ -118,6 +125,7 @@ end;
 function GetZipMainFolder(f:string):string;
 var
   UnZipper: TUnZipper;
+  EntryName: string;
 begin
   result:='';
   UnZipper := TUnZipper.Create;
@@ -125,7 +133,12 @@ begin
     UnZipper.FileName := Utf8ToAnsi(f);
     try
       UnZipper.Examine;
-      Result:=UnZipper.Entries.Entries[0].ArchiveFileName;
+      EntryName:=UnZipper.Entries.Entries[0].ArchiveFileName;
+        // Check if this is a directory (ends with '/' or '\')
+        if (EntryName <> '') and ((EntryName[Length(EntryName)] = '/') or (EntryName[Length(EntryName)] = '\')) then
+        begin
+          Result := EntryName;
+        end;
     except
       ON E:Exception do
       begin
@@ -136,6 +149,20 @@ begin
   finally
     UnZipper.Free;
   end;
+end;
+
+function UnzipFolder(msg,setdir,zipfile:string):boolean;
+var
+  ZipMainFolder:string;
+  SetPath:string;
+begin
+  ZipMainFolder:=GetZipMainFolder(zipfile);
+  SetPath:=ExtractFilePath(ExcludeTrailingPathDelimiter(setdir));
+  Result := (ZipMainFolder<>'') and UnZip(zipfile,SetPath) and DirReplace(SetPath+ZipMainFolder,setdir);
+  if Result then
+    DeleteFile(zipfile)
+  else
+    ShowMessage('Failed to create '+msg+' folder: '+setdir);
 end;
 
 function PopulateDirList(const directory : string; list : TStrings): boolean;
@@ -181,6 +208,7 @@ end;
 
 function DirReplace(s,d:string): boolean;
 begin
+  if (AnsiCompareFileName(ExpandFileName(s), ExpandFileName(d)) = 0) then exit(true);
   if DirDelete(d) then
   begin
     Sleep(10);
@@ -293,6 +321,39 @@ begin
   TimeGoal := MilliSecondOfTheDay(Now)+Milliseconds;
   while MilliSecondOfTheDay(Now) < (TimeGoal) do ;
 end;
+
+function GetVersion(textlines:TStrings):string;
+{ Extrae la versión del programa, si existe, de la primera línea que contenga '-- Version' }
+var
+  L,line: string;
+begin
+  result:='0.0.0';
+  for L in textlines do
+  begin
+    line:=Trim(L);
+    if (pos('-- Version:',line)=1) then
+    begin
+      line:=Trim(Copy(line,12,100));
+      if line<>'' then result:=line;
+      exit;
+    end;
+  end;
+end;
+
+function GetVersionFrom(fname:string):string;
+var L:TStringList;
+begin
+  result:='0.0.0';
+  if not FileExists(fname) then exit;
+  L:=TStringList.Create();
+  try
+    L.LoadFromFile(fname);
+    result:=GetVersion(L);
+  finally
+    if assigned(L) then L.free;
+  end;
+end;
+
 
 end.
 

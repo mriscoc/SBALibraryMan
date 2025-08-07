@@ -8,9 +8,10 @@ uses
   Classes, SysUtils, ListViewFilterEdit, Forms, Controls, Graphics, Dialogs,
   ComCtrls, Buttons, ExtCtrls, FileUtil, LazFileUtils, SynExportHTML, StrUtils,
   SynHighlighterPas, SynHighlighterHTML, SynHighlighterCpp, SynHighlighterIni,
-  lclintf, StdCtrls, EditBtn, Menus, IniPropStorage,
-  IniFiles, SynHighlighterPython, SynEdit, SynHighlighterVHDL, MarkdownProcessor,
-  MarkdownUtils, uEImage, BGRABitmap, Math, ConfigU, versionsupportu;
+  lclintf, StdCtrls, EditBtn, Menus, IniPropStorage, IniFiles,
+  SynHighlighterPython, SynEdit, SynHighlighterVHDL,
+  MarkdownProcessor, MarkdownUtils, uEImage, BGRABitmap, Math, ConfigU,
+  versionsupportu;
 
 type
   tLibDwStatus=(Idle,GetBase, GetLibrary, GetPrograms, GetSnippets);
@@ -47,11 +48,21 @@ type
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    SnpVersionEd: TLabeledEdit;
+    PrgVersionEd: TLabeledEdit;
     L_TitleIPCore: TLabel;
     MenuItem1: TMenuItem;
     Panel7: TPanel;
@@ -70,6 +81,7 @@ type
     PB_SBAprograms: TProgressBar;
     PB_SBAsnippets: TProgressBar;
     IpCoreDescription: TMemo;
+    LibVersionEd: TLabeledEdit;
     SnpDescription: TSynEdit;
     SnippetsFilter: TListViewFilterEdit;
     IPCoresFilter: TListViewFilterEdit;
@@ -117,6 +129,7 @@ type
     procedure MenuItem1Click(Sender: TObject);
     procedure URL_IpCoreClick(Sender: TObject);
   private
+    function ItemColor(Item: TListItem):TColor;
     procedure AddItemToIPCoresFilter(FileIterator: TFileIterator);
     procedure AddItemToProgramsFilter(FileIterator: TFileIterator);
     procedure AddItemToSnippetsFilter(FileIterator: TFileIterator);
@@ -126,7 +139,7 @@ type
     procedure EndGetLibrary;
     procedure EndGetPrograms;
     procedure EndGetSnippets;
-    function GetVersion(f: string): string;
+    function GetIniVersion(f: string): string;
     function LookupFilterItem(S: string; LV: TListViewDataList): integer;
     procedure ProcessGetFile(UrlValue, ZipFile: string; PB: TProgressBar;
       status: TLibDwStatus);
@@ -284,23 +297,32 @@ end;
 
 procedure TLibraryForm.LV_SnippetsCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
-var Icolor:TColor;
 begin
-  if SnippetsList.IndexOf(Item.Caption)=-1 then Icolor:=clGreen else Icolor:=clBlack;
-  Sender.Canvas.Font.Color:=Icolor;
+  Sender.Canvas.Font.Color:=ItemColor(Item);
+{$IFDEF LINUX}
+//Workaround to ListView.Canvas.Font in GTK
+  if Item.SubItems[1]<>'=' then
+  begin
+    DefaultDraw:=False;
+    Sender.Canvas.Brush.Style:=bsClear;
+    Sender.Canvas.TextOut(Item.Left+5, Item.Top+3, Item.Caption);
+  end;
+{$ENDIF}
 end;
 
 procedure TLibraryForm.LV_SnippetsSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 var
-  f:string;
+  f,fname:string;
   l:TListItem;
 begin
   L:=LV_Snippets.Selected;
   if (L=nil) or (LV_Snippets.Items.Count=0) then exit;
-  B_AddtoSnippets.Enabled:=SnippetsList.IndexOf(L.Caption)=-1;
   f:=L.SubItems[0];
   if FileExists(f) then SnpDescription.Lines.LoadFromFile(f);
+  fname:=ExtractFileName(f);
+  SnpVersionEd.text:=GetVersionFrom(SnippetsDir+PathDelim+fname);
+  B_AddtoSnippets.Enabled:=(L.SubItems[1]='N') or (L.SubItems[1]='U');
 end;
 
 procedure TLibraryForm.MenuItem1Click(Sender: TObject);
@@ -441,8 +463,7 @@ begin
   if assigned(ProgramsList) then FreeAndNil(ProgramsList);
 end;
 
-procedure TLibraryForm.LV_IPCoresCustomDrawItem(Sender: TCustomListView;
-  Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+function TLibraryForm.ItemColor(Item: TListItem):TColor;
 var Icolor:TColor;
 begin
   case Item.SubItems[1] of
@@ -451,7 +472,13 @@ begin
     'N': Icolor:=clGreen;
   else Icolor:=clRed;
   end;
-  Sender.Canvas.Font.Color:=Icolor;
+  result:=Icolor;
+end;
+
+procedure TLibraryForm.LV_IPCoresCustomDrawItem(Sender: TCustomListView;
+  Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+begin
+  Sender.Canvas.Font.Color:=ItemColor(Item);
 {$IFDEF LINUX}
 //Workaround to ListView.Canvas.Font in GTK
   if Item.SubItems[1]<>'=' then
@@ -466,7 +493,7 @@ end;
 procedure TLibraryForm.LV_IPCoresSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 var
-  f,path,Img:string;
+  f,fname,path,Img:string;
   l:TListItem;
   Ini:TIniFile;
 begin
@@ -483,11 +510,13 @@ begin
   try
     Ini:=TINIFile.Create(f);
     Path:=ExtractFilePath(f);
-    IpCoreDescription.Caption:=Ini.ReadString('MAIN','Description','');
+    fname:=ExtractFileNameOnly(f);
+    IpCoreDescription.Caption:=Ini.ReadString('MAIN','Description','') + LineEnding + LineEnding + 'Version: '+Ini.ReadString('MAIN','Version','0.0.1');
     L_TitleIpCore.Caption:=Ini.ReadString('MAIN','Title','');
     URL_IpCore:=Ini.ReadString('MAIN','RepositoryURL','');
     IpCoreDataSheet:=Path+Ini.ReadString('MAIN','DataSheet','readme.md');
     Img:=Path+Ini.ReadString('MAIN','Image','image.png');
+    LibVersionEd.text:=GetIniVersion(LibraryDir+fname+PathDelim+fname+'.ini')
   finally
     Ini.free;
   end;
@@ -500,23 +529,32 @@ end;
 
 procedure TLibraryForm.LV_ProgramsCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
-var Icolor:TColor;
 begin
-  if ProgramsList.IndexOf(Item.Caption)=-1 then Icolor:=clGreen else Icolor:=clBlack;
-  Sender.Canvas.Font.Color:=Icolor;
+  Sender.Canvas.Font.Color:=ItemColor(Item);
+{$IFDEF LINUX}
+//Workaround to ListView.Canvas.Font in GTK
+  if Item.SubItems[1]<>'=' then
+  begin
+    DefaultDraw:=False;
+    Sender.Canvas.Brush.Style:=bsClear;
+    Sender.Canvas.TextOut(Item.Left+5, Item.Top+3, Item.Caption);
+  end;
+{$ENDIF}
 end;
 
 procedure TLibraryForm.LV_ProgramsSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 var
-  f:string;
+  f,fname:string;
   l:TListItem;
 begin
   L:=LV_Programs.Selected;
   if (L=nil) or (LV_Programs.Items.Count=0) then exit;
-  B_AddtoPrograms.Enabled:=ProgramsList.IndexOf(L.Caption)=-1;
   f:=L.SubItems[0];
   if f<>'' then PrgDescription.Lines.LoadFromFile(f);
+  fname:=ExtractFileName(f);
+  PrgVersionEd.text:=GetVersionFrom(ProgramsDir+PathDelim+fname);
+  B_AddtoPrograms.Enabled:=(L.SubItems[1]='N') or (L.SubItems[1]='U');
 end;
 
 procedure TLibraryForm.B_AddtoLibraryClick(Sender: TObject);
@@ -551,7 +589,7 @@ begin
   f:=L.SubItems[0];
   d:=ProgramsDir+L.Caption+'.prg';
   try
-    if FileExistsUTF8(d) or not CopyFile(f,d) then
+    if not CopyFile(f,d) then
       ShowMessage('The Program could not be copied to the local library.');
   except
     on E:Exception do Info('TLibraryForm.B_AddtoProgramsClick',E.Message);
@@ -572,7 +610,7 @@ begin
   f:=L.SubItems[0];
   d:=SnippetsDir+L.Caption+'.snp';
   try
-    if FileExistsUTF8(d) or not CopyFile(f,d) then
+    if not CopyFile(f,d) then
       ShowMessage('The Snippet could not be copied to the local library.');
   except
     on E:Exception do Info('TLibraryForm.B_AddtoSnippetsClick',E.Message);
@@ -673,7 +711,7 @@ begin
   end else SB.SimpleText:='There was an error unziping';
 end;
 
-function TLibraryForm.GetVersion(f:string):string;
+function TLibraryForm.GetIniVersion(f:string):string;
 var ini:TIniFile;
 begin
   if FileExistsUTF8(f) then
@@ -694,7 +732,7 @@ begin
   SetLength(Data.StringArray,3);
   Data.StringArray[0]:=ExtractFileNameWithoutExt(FileIterator.FileInfo.Name);
   Data.StringArray[1]:=FileIterator.FileName;
-  v:=VCmpr(GetVersion(FileIterator.FileName),GetVersion(LibraryDir+Data.StringArray[0]+PathDelim+Data.StringArray[0]+'.ini'));
+  v:=VCmpr(GetIniVersion(FileIterator.FileName),GetIniVersion(LibraryDir+Data.StringArray[0]+PathDelim+Data.StringArray[0]+'.ini'));
   if IpCoreList.IndexOf(Data.StringArray[0])=-1 then
     Data.StringArray[2]:='N'  // The item is new do not exists in local library
   else if v>0 then Data.StringArray[2]:='U' // the item is a new version of the one in the local library
@@ -705,22 +743,45 @@ end;
 procedure TLibraryForm.AddItemToProgramsFilter(FileIterator: TFileIterator);
 var
   Data:TListViewDataItem;
+  lversion,rversion:string;
+  v:integer;
 begin
   Data.Data := nil;
-  SetLength(Data.StringArray,2);
+  SetLength(Data.StringArray,3);
   Data.StringArray[0]:=ExtractFileNameWithoutExt(FileIterator.FileInfo.Name);
   Data.StringArray[1]:=FileIterator.FileName;
+  lversion:=GetVersionFrom(ProgramsDir+FileIterator.FileInfo.Name);
+  rversion:=GetVersionFrom(FileIterator.FileName);
+  v:=VCmpr(rversion,lversion);
+  if ProgramsList.IndexOf(Data.StringArray[0])=-1 then
+    Data.StringArray[2]:='N'  // The item is new do not exists in local library
+  else if v>0 then Data.StringArray[2]:='U' // the item is a new version of the one in the local library
+    else if v=0 then Data.StringArray[2]:='=';  // the item is the same as local library
   ProgramsFilter.Items.Add(Data);
 end;
 
 procedure TLibraryForm.AddItemToSnippetsFilter(FileIterator: TFileIterator);
 var
   Data:TListViewDataItem;
+  lversion,rversion:string;
+  v:integer;
 begin
   Data.Data := nil;
-  SetLength(Data.StringArray,2);
+
+  //SetLength(Data.StringArray,2);
+  //Data.StringArray[0]:=ExtractFileNameWithoutExt(FileIterator.FileInfo.Name);
+  //Data.StringArray[1]:=FileIterator.FileName;
+
+  SetLength(Data.StringArray,3);
   Data.StringArray[0]:=ExtractFileNameWithoutExt(FileIterator.FileInfo.Name);
   Data.StringArray[1]:=FileIterator.FileName;
+  lversion:=GetVersionFrom(SnippetsDir+FileIterator.FileInfo.Name);
+  rversion:=GetVersionFrom(FileIterator.FileName);
+  v:=VCmpr(rversion,lversion);
+  if SnippetsList.IndexOf(Data.StringArray[0])=-1 then
+    Data.StringArray[2]:='N'  // The item is new do not exists in local library
+  else if v>0 then Data.StringArray[2]:='U' // the item is a new version of the one in the local library
+    else if v=0 then Data.StringArray[2]:='=';  // the item is the same as local library
   SnippetsFilter.Items.Add(Data);
 end;
 

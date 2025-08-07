@@ -1,5 +1,7 @@
 program SBAlibrary;
 
+{$DEFINE SBALIBRARY} // Definido también en opciones del proyecto
+
 {$mode objfpc}{$H+}
 
 uses
@@ -7,8 +9,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uecontrols, lazcontrols, libraryformu,
-  UtilsU, SBAProgContrlrU, SBAProgramU, versionsupportu
+  Forms, lazcontrols, anchordockpkg, libraryformu,
+  utilsu, configu, versionsupportu, uecontrols
   { you can add units after this };
 
 {$R *.res}
